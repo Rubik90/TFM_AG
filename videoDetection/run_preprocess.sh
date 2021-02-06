@@ -1,0 +1,1 @@
+python3 ./preprocess.py --src_vid_path "/home/workspace/AudioVideoEmotionDetection/videos/Train_Set/" --fe_bin_path "/home/workspace/OpenFace/FeatureExtraction" --flv_bin_path "/home/workspace/OpenFace/FaceLandmarkVid"
