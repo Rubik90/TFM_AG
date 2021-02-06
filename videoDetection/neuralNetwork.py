@@ -9,6 +9,7 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from keras.utils import np_utils
+from loguru import logger
 import time
 # pd.set_option('display.max_rows', 500)
 # pd.set_option('display.max_columns', 500)
