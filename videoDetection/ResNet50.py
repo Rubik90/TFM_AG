@@ -62,36 +62,8 @@ X_test = X_test.reshape(X_test.shape[0], 48, 48, 1)
 # print(f"shape:{X_train.shape}")
 ##designing the cnn
 #1st convolution layer
-model = Sequential()
+model = ResNet50(include_top = True, weights = None, input_shape = (X_train.shape[1:]), pooling = "avg", classes = num_labels)
 
-model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', input_shape=(X_train.shape[1:])))
-model.add(Conv2D(64,kernel_size= (3, 3), activation='relu'))
-# model.add(BatchNormalization())
-model.add(MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
-model.add(Dropout(0.5))
-
-#2nd convolution layer
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-# model.add(BatchNormalization())
-model.add(MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
-model.add(Dropout(0.5))
-
-#3rd convolution layer
-model.add(Conv2D(128, (3, 3), activation='relu'))
-model.add(Conv2D(128, (3, 3), activation='relu'))
-# model.add(BatchNormalization())
-model.add(MaxPooling2D(pool_size=(2,2), strides=(2, 2)))
-
-model.add(Flatten())
-
-#fully connected neural networks
-model.add(Dense(1024, activation='relu'))
-model.add(Dropout(0.2))
-model.add(Dense(1024, activation='relu'))
-model.add(Dropout(0.2))
-
-model.add(Dense(num_labels, activation='softmax'))
 #model.add(LSTM(64,return_sequences=True))
 
 model.summary()
