@@ -1,7 +1,3 @@
-"""
-File used to make a plot of the model.
-"""
-
 import keras
 from keras.utils import plot_model
 

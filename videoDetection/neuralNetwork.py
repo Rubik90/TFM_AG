@@ -11,16 +11,11 @@ from keras.regularizers import l2
 from keras.utils import np_utils
 from loguru import logger
 import time
-# pd.set_option('display.max_rows', 500)
-# pd.set_option('display.max_columns', 500)
-# pd.set_option('display.width', 1000)
 
 df=pd.read_csv('dataset.csv')
 
-# print(df.info())
-# print(df["Usage"].value_counts())
+print(df.info())
 
-# print(df.head())
 X_train,train_y,X_test,test_y=[],[],[],[]
 
 for index, row in df.iterrows():
@@ -39,7 +34,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 30
+epochs = 150
 width, height = 48, 48
 
 
@@ -115,11 +110,10 @@ model.fit(X_train, train_y,
 
 logger.info("Start training")
 search_start = time.time()
+loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 logger.info(f"Elapsed time (s): {elapsed_time}")
-
-loss, accuracy = model.evaluate(X_test, test_y)
 logger.info(f"loss: {loss}, accuracy: {accuracy}")
 
 #Saving the  model to  use it later on

@@ -15,13 +15,11 @@ def createFileList(myDir, format='.bmp'):
             fileList.append(fullName)
   return fileList
 
-# load the original image
 myFileList = createFileList('dataset_rs/train_frames/')
 
 for file in myFileList:
     print(file)
     img_file = Image.open(file)
-    # img_file.show()
 
     # get original image parameters...
     width, height = img_file.size

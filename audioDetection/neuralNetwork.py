@@ -1,6 +1,3 @@
-"""
-Neural network train file.
-"""
 import os
 import joblib
 import numpy as np
@@ -26,9 +23,6 @@ class TrainModel:
 
     @staticmethod
     def train_neural_network(X, y) -> None:
-        """
-        This function trains the neural network.
-        """
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
@@ -81,7 +75,7 @@ class TrainModel:
         print(classification_report(new_y_test, predictions))
         print(matrix)
 
-        model_name = 'Emotion_Voice_Detection_Model.h5'
+        model_name = 'audioModel.h5'
 
         # Save model and weights
         if not os.path.isdir(MODEL_DIR_PATH):

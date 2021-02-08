@@ -8,20 +8,16 @@ from keras.preprocessing import image
 from config import EXAMPLES_PATH
 from config import MODEL_DIR_PATH
 
-class LivePredictions:
+class audioPredictions:
 
     def __init__(self, file):
-        """
-        Init method is used to initialize the main parameters.
-        """
+
         self.file = file
-        self.path = MODEL_DIR_PATH + 'Emotion_Voice_Detection_Model.h5'
+        self.path = MODEL_DIR_PATH + 'audioModel.h5'
         self.loaded_model = keras.models.load_model(self.path)
 
     def make_predictions(self):
-        """
-        Method to process the files and create your features.
-        """
+
         data, sampling_rate = librosa.load(self.file)
         mfccs = np.mean(librosa.feature.mfcc(y=data, sr=sampling_rate, n_mfcc=40).T, axis=0)
         x = np.expand_dims(mfccs, axis=1)
@@ -49,16 +45,16 @@ class LivePredictions:
 
 if __name__ == '__main__':
     # load model
-    model = model_from_json(open("mod.json", "r").read())
+    model = model_from_json(open("vidModel.json", "r").read())
     # load weights
-    model.load_weights('mod.h5')
+    model.load_weights('vidModelWeights.h5')
     face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
     cap = cv2.VideoCapture("test.avi")
     chunks = os.listdir("./audioChunks/")
     i=0
     for chunk in chunks:
-      live_prediction = LivePredictions(file="./audioChunks/" + chunk)
+      live_prediction = audioPredictions(file="./audioChunks/" + chunk)
 
       ret, test_img = cap.read()  # captures frame and returns boolean value and captured image
       if not ret:
@@ -89,10 +85,10 @@ if __name__ == '__main__':
         print("Multimodal emotion prediction at second " + str(i) +" is :" + audio_prediction)
       else:
         print("The singles modalities predictions do not match")
-  # cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+    #cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
       i=i+1
     # resized_img = cv2.resize(test_img, (1000, 700))
-    # cv2.imshow('Facial emotion analysis ',resized_img)
+    # cv2.imshow('Emotion analysis ',resized_img)
 
 
     # if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
