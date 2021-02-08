@@ -118,8 +118,8 @@ logger.info(f"loss: {loss}, accuracy: {accuracy}")
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("mod.json", "w") as json_file:
+with open("vidModel.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("mod.h5")
+model.save_weights("vidModelWeights.h5")
 
 
