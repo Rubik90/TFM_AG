@@ -100,7 +100,7 @@ def c_model():
                   metrics=['accuracy'])
     return model
 
-model = KerasClassifier(build_fn=c_model, epochs= num_epochs, batch_size=batch_size)
+#model = KerasClassifier(build_fn=c_model, epochs= num_epochs, batch_size=batch_size)
 
 #model.fit(X_train, y_train)
 
@@ -108,8 +108,8 @@ from sklearn.model_selection import GridSearchCV
 
 model = KerasClassifier(build_fn=c_model)
 
-batch_sizes = [5, 10]
-epochs = [5, 10]
+batch_sizes = [64, 128]
+epochs = [30, 60, 90]
 parameters = {'batch_size': batch_sizes, 'epochs': epochs}
 clf = GridSearchCV(model, parameters)
 clf.fit(X_train, y_train)

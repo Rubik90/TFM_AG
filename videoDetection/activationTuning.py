@@ -33,8 +33,8 @@ for index, row in df.iterrows():
 
 num_features = 64
 num_labels = 7
-batch_size = 64
-epochs = 150
+batch_size = 128
+epochs = 90
 width, height = 48, 48
 
 
@@ -101,7 +101,9 @@ def c_model(activation):
                   metrics=['accuracy'])
     return model
 
-model = KerasClassifier(build_fn=c_model, epochs=50, batch_size=32)
+from keras.wrappers.scikit_learn import KerasClassifier
+
+model = KerasClassifier(build_fn=c_model, epochs=epochs, batch_size=batch_size)
 parameters = {'activation':['softmax', 'softplus', 'softsign', 'relu', 'tanh', 'sigmoid', 'hard_sigmoid', 'linear']}
 clf = GridSearchCV(model, parameters)
 clf.fit(X_train, y_train)
