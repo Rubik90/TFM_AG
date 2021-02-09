@@ -101,6 +101,7 @@ def c_model(activation):
                   metrics=['accuracy'])
     return model
 
+from sklearn.model_selection import GridSearchCV
 from keras.wrappers.scikit_learn import KerasClassifier
 
 model = KerasClassifier(build_fn=c_model, epochs=epochs, batch_size=batch_size)
