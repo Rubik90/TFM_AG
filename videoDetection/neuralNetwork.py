@@ -58,16 +58,19 @@ priv_y=np_utils.to_categorical(priv_y, num_classes=num_labels)
 #normalizing data between 0 and 1
 X_train -= np.mean(X_train, axis=0)
 X_train /= np.std(X_train, axis=0)
-X_priv /= np.std(X_train, axis=0)
 
 X_test -= np.mean(X_test, axis=0)
 X_test /= np.std(X_test, axis=0)
+
+X_priv -= np.mean(X_priv, axis=0)
+X_priv /= np.std(X_priv, axis=0)
 
 X_train = X_train.reshape(X_train.shape[0], 48, 48, 1)
 
 X_test = X_test.reshape(X_test.shape[0], 48, 48, 1)
 
-# print(f"shape:{X_train.shape}")
+X_priv = X_test.reshape(X_priv.shape[0], 48, 48, 1)
+
 ##designing the cnn
 #1st convolution layer
 model = Sequential()
@@ -151,7 +154,7 @@ loss, accuracy = model.evaluate(X_priv, priv_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "Validation accuracy: " + str(accuracy))
+print("Test loss: " + str(loss) + "Test accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
