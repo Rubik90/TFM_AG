@@ -40,7 +40,7 @@ class model:
         seed = None,
         validation_split = None,
         subset = None,
-        interpolation = "bilinear",
+        interpolation = "nearest",
         follow_links = False
       )
 
@@ -67,9 +67,11 @@ class model:
     return model
 
   def fit(self, model, data_generator):
+    callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
-                        epochs = 10)
+                        epochs = 40,
+                        callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):
@@ -133,7 +135,8 @@ class model:
     model = self.build(print_summary = True)
     model = self.compile(model)
     model, history = self.fit(model, data_generator)
-    self.visualize_metrics(history)
+    self.plot_accuracy(history)
+    self.plot_accuracy(history)
     self.evaluate(model, data_generator)
 
     return model, history
