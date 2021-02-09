@@ -19,7 +19,7 @@ df=pd.read_csv('dataset.csv')
 
 print(df.info())
 
-X_train,train_y,X_test,test_y, X_priv, priv_y=[],[],[],[],[],[]
+X_train,train_y,X_test,test_y=[],[],[],[]
 
 for index, row in df.iterrows():
     val=row['pixels'].split(" ")
@@ -30,9 +30,6 @@ for index, row in df.iterrows():
         elif 'PublicTest' in row['Usage']:
            X_test.append(np.array(val,'float32'))
            test_y.append(row['emotion'])
-        elif 'PrivateTest' in row['Usage']:
-           X_priv.append(np.array(val,'float32'))
-           priv_y.append(row['emotion'])
     except:
         print(f"error occured at index :{index} and row:{row}")
 
@@ -40,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 128
-epochs = 15
+epochs = 50
 width, height = 48, 48
 
 
@@ -48,17 +45,14 @@ X_train = np.array(X_train,'float32')
 train_y = np.array(train_y,'float32')
 X_test = np.array(X_test,'float32')
 test_y = np.array(test_y,'float32')
-X_priv = np.array(X_priv,'float32')
-priv_y = np.array(priv_y,'float32')
 
 train_y=np_utils.to_categorical(train_y, num_classes=num_labels)
 test_y=np_utils.to_categorical(test_y, num_classes=num_labels)
-priv_y=np_utils.to_categorical(priv_y, num_classes=num_labels)
 
-#normalizing data between 0 and 1
+#cannot produce
+#normalizing data between oand 1
 X_train -= np.mean(X_train, axis=0)
 X_train /= np.std(X_train, axis=0)
-X_priv /= np.std(X_train, axis=0)
 
 X_test -= np.mean(X_test, axis=0)
 X_test /= np.std(X_test, axis=0)
@@ -136,22 +130,20 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.savefig('accuracy.png')
 plt.show()
+predictions = model.predict_classes(X_test)
+new_y_test = y_test.astype(int)
+matrix = confusion_matrix(new_y_test, predictions)
 
-#validation loss and accuracy
+print(classification_report(new_y_test, predictions))
+print(matrix)
+
+print("Start training")
 search_start = time.time()
 loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "Validation accuracy: " + str(accuracy))
-
-#test loss and accuracy
-search_start = time.time()
-loss, accuracy = model.evaluate(X_priv, priv_y)
-search_end = time.time()
-elapsed_time = search_end - search_start
-print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "Validation accuracy: " + str(accuracy))
+print("loss: " + str(loss) + " accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
