@@ -79,16 +79,16 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
- 
-model = ResNet50(include_top = True, weights = None, input_shape = (width, height, 1), pooling = "avg", classes = num_labels)
+print(X_train.shape[1:])
+model = ResNet50(include_top = True, weights = None, input_shape = (X_train.shape[1:]), pooling = "avg", classes = num_labels)
 model.summary()
 
-optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+#optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
 
-callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+#callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
 
 model.compile(loss  = "categorical_crossentropy",
-                  optimizer = optimizer,
+                  optimizer = Adam(),
                   metrics = ["accuracy"])
 
 
@@ -98,8 +98,8 @@ cnn_history = model.fit(X_train, train_y,
           verbose=1,
           #validation_split = 0.33,
           validation_data=(X_test, test_y),
-          shuffle=True,
-          callbacks = callback)
+          shuffle=True)
+          #callbacks = [callback])
 
         # Loss plotting
 plt.plot(cnn_history.history['loss'])
