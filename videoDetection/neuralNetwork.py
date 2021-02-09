@@ -13,6 +13,7 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 import time
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
 
 df=pd.read_csv('dataset.csv')
 
@@ -36,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 128
-epochs = 90
+epochs = 50
 width, height = 48, 48
 
 
@@ -103,16 +104,12 @@ model.compile(loss=categorical_crossentropy,
               metrics=['accuracy'])
 
 #Training the model
-model.fit(X_train, train_y,
+cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
           validation_data=(X_test, test_y),
           shuffle=True)
-
-cnn_history = model.fit(x_traincnn, y_train,
-                               batch_size=16, epochs=50,
-                               validation_data=(x_testcnn, y_test))
 
         # Loss plotting
 plt.plot(cnn_history.history['loss'])
@@ -133,7 +130,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.savefig('accuracy.png')
 plt.show()
-predictions = model.predict_classes(x_testcnn)
+predictions = model.predict_classes(X_test)
 new_y_test = y_test.astype(int)
 matrix = confusion_matrix(new_y_test, predictions)
 

@@ -25,14 +25,13 @@ if "--model" in sys.argv:
 else:
   print("ERROR: No value specified for parameter \"model\" (possible values are \"resnet50\" and \"vgg_16\")")
   sys.exit()
-
-print(model)
+    
 if model == "resnet50":
   model = resnet50.model(train_path, val_path, test_path)
 elif model == "vgg16":
   model = vgg16.model(train_path, val_path, test_path)
 else:
-  print(str(model)+"ERROR: Invalid value for param \"model\" (the only two possible values are \"resnet50\" and \"vgg_16\")")
+  print("ERROR: Invalid value for param \"model\" (the only two possible values are \"resnet50\" and \"vgg_16\")")
   sys.exit()
 
 if __name__ == "__main__":

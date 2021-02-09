@@ -1,1 +1,0 @@
-python3 emotion_classifier.py --train_path "../dataset_rs_int/train_frames" --val_path "../dataset_rs_int/val_frames" --test_path "../dataset_rs_int/test_frames" --model "vgg16"

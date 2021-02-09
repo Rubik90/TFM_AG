@@ -30,7 +30,7 @@ class model:
         self.samples_dir[split],
         labels = "inferred",
         label_mode = "categorical",
-        class_names = ['Anger', 'Disgust', 'Fear', 'Happiness', 'Neutral', 'Sadness', 'Surprise'],
+        class_names = ["0", "1", "2", "3", "4", "5", "6"],
         color_mode = "rgb",
         batch_size = 32,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
@@ -70,7 +70,6 @@ class model:
                         epochs = 40)
     return model, history
 
-
   def visualize_metrics(self, history):
     plt.plot(history.history["accuracy"], label = "Train Accuracy")
     plt.plot(history.history["val_accuracy"], label = "Validation Accuracy")
@@ -98,7 +97,6 @@ class model:
     print(f"Model saved in {path}")
 
   def run(self):
-    
     data_generator = self.create_data_generator()
     model = self.build(print_summary = True)
     model = self.compile(model)

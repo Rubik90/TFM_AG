@@ -1,1 +1,0 @@
-python3 emotion_classifier.py --train_path "../../dataset/random_sampled/train_frames" --val_path "../../dataset/random_sampled/val_frames" --test_path "../../dataset/random_sampled/test_frames" --model "resnet50"
