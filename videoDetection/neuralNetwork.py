@@ -14,6 +14,7 @@ import time
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
+from tensorflow.keras.applications.resnet50 import ResNet50
 
 df=pd.read_csv('dataset.csv')
 
@@ -40,7 +41,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 15
+epochs = 30
 width, height = 48, 48
 
 
@@ -73,7 +74,7 @@ X_priv = X_test.reshape(X_priv.shape[0], 48, 48, 1)
 
 ##designing the cnn
 #1st convolution layer
-model = Sequential()
+"""model = Sequential()
 
 model.add(Conv2D(64, kernel_size=(3, 3), activation='relu', input_shape=(X_train.shape[1:])))
 model.add(Conv2D(64,kernel_size= (3, 3), activation='relu'))
@@ -104,7 +105,8 @@ model.add(Dropout(0.2))
 
 model.add(Dense(num_labels, activation='softmax'))
 #model.add(LSTM(64,return_sequences=True))
-
+"""
+model = ResNet50(include_top = True, weights = None, input_shape = (X_train.shape[1:]), pooling = "avg", classes = num_labels)
 model.summary()
 
 #Compliling the model
@@ -117,7 +119,8 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_data=(X_priv, priv_y),
+          #validation_split = 0.33,
+          validation_data=(X_test, test_y),
           shuffle=True)
 
         # Loss plotting
