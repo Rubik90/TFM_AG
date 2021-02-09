@@ -131,3 +131,4 @@ dmypy.json
 /videos/
 /annotations/
 /audios/
+/videoDetection/model/*
