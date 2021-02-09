@@ -20,7 +20,9 @@ class model:
     }
     self.IMG_HEIGHT = 112
     self.IMG_WIDTH = 112
+    self.NUM_CHANNELS = 3
     self.NUM_CLASSES = len(os.listdir(train_path))
+    self.path = "./resnet50.h5"
   
   def create_data_generator(self):
     data_generator = {}
@@ -32,7 +34,7 @@ class model:
         label_mode = "categorical",
         class_names = ["0", "1", "2", "3", "4", "5", "6"],
         color_mode = "rgb",
-        batch_size = 32,
+        batch_size = 4,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
         shuffle = True,
         seed = None,
@@ -48,7 +50,7 @@ class model:
     return data_generator
   
   def build(self, print_summary = False):
-    model = ResNet50(include_top = True, weights = None, input_shape = (self.IMG_HEIGHT, self.IMG_WIDTH, 3), pooling = "avg", classes = self.NUM_CLASSES)
+    model = ResNet50(include_top = True, weights = None, input_shape = (self.IMG_HEIGHT, self.IMG_WIDTH, self.NUM_CHANNELS), pooling = "avg", classes = self.NUM_CLASSES)
 
     if print_summary:
       model.summary()
@@ -67,10 +69,10 @@ class model:
   def fit(self, model, data_generator):
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
-                        epochs = 40)
+                        epochs = 10)
     return model, history
 
-  def visualize_metrics(self, history):
+  def plot_accuracy(self, history):
     plt.plot(history.history["accuracy"], label = "Train Accuracy")
     plt.plot(history.history["val_accuracy"], label = "Validation Accuracy")
     plt.xlabel("Epoch")
@@ -81,6 +83,25 @@ class model:
     plt.ylim([0, 1])
     plt.legend(loc = "lower right")
     plt.show()
+
+    plt.savefig("accuracy.png")
+    plt.close()
+  
+  def plot_loss(self, history):
+    plt.plot(history.history["loss"], label = "Train Loss")
+    plt.plot(history.history["val_loss"], label = "Validation Loss")
+    plt.xlabel("Epoch")
+    plt.ylabel("Accuracy")
+    plt.xscale("linear")
+    plt.yscale("linear")
+    plt.grid(True)
+    plt.ylim([0, 1])
+    plt.legend(loc = "lower right")
+    plt.show()
+
+    # Saves the diagram for further use
+    plt.savefig('loss.png')
+    plt.close()
   
   def evaluate(self, model, data_generator):
     # Model evaluation
@@ -88,13 +109,24 @@ class model:
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-  def save(model):
-    # Model save
-    path = "./resnet50.h5"
-    
-    model.save(path)
+    f = open("Test Evaluation Results.txt", "w")
+    f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
+    f.close()
 
-    print(f"Model saved in {path}")
+  def save(self, model):
+    model.save(self.path)
+
+    print(f"Model saved in {self.path}")
+  
+  def load(self):
+    model = tf.keras.models.load_model(self.path)
+
+    return model
+
+  def predict_generator(self, data_generator):
+    prediction = model.predict_generator(generator = data_generator)
+    
+    print(prediction)
 
   def run(self):
     data_generator = self.create_data_generator()
