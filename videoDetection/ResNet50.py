@@ -9,7 +9,6 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from keras.utils import np_utils
-from loguru import logger
 from tensorflow.keras.applications.resnet50 import ResNet50
 import time
 
@@ -38,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 30
+epochs = 15
 width, height = 48, 48
 
 
@@ -63,11 +62,11 @@ X_test /= np.std(X_test, axis=0)
 X_priv -= np.mean(X_priv, axis=0)
 X_priv /= np.std(X_priv, axis=0)
 
-X_train = X_train.reshape(X_train.shape[0], 48, 48, 1)
+X_train = X_train.reshape(X_train.shape[0], width, height, 1)
 
-X_test = X_test.reshape(X_test.shape[0], 48, 48, 1)
+X_test = X_test.reshape(X_test.shape[0], width, height, 1)
 
-X_priv = X_test.reshape(X_priv.shape[0], 48, 48, 1)
+X_priv = X_test.reshape(X_priv.shape[0], width, height, 1)
 
 import warnings
 warnings.simplefilter(action = 'ignore', category = FutureWarning)
@@ -81,20 +80,26 @@ import matplotlib.pyplot as plt
 from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
  
-model = ResNet50(include_top = True, weights = None, input_shape = (self.IMG_HEIGHT, self.IMG_WIDTH, 3), pooling = "avg", classes = self.NUM_CLASSES)
+model = ResNet50(include_top = True, weights = None, input_shape = (width, height, 1), pooling = "avg", classes = num_labels)
 model.summary()
 
-
 optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
-    
+
+callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+
 model.compile(loss  = "categorical_crossentropy",
                   optimizer = optimizer,
                   metrics = ["accuracy"])
 
 
-history = model.fit(data_generator["train"],
-                        validation_data = data_generator["validation"],
-                        epochs = 40)
+cnn_history = model.fit(X_train, train_y,
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          #validation_split = 0.33,
+          validation_data=(X_test, test_y),
+          shuffle=True,
+          callbacks = callback)
 
         # Loss plotting
 plt.plot(cnn_history.history['loss'])
