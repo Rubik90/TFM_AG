@@ -39,7 +39,7 @@ for index, row in df.iterrows():
 
 num_features = 64
 num_labels = 7
-batch_size = 128
+batch_size = 64
 epochs = 15
 width, height = 48, 48
 
@@ -117,7 +117,7 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_data=(X_test, test_y),
+          validation_data=(X_priv, priv_y),
           shuffle=True)
 
         # Loss plotting
@@ -138,7 +138,6 @@ plt.ylabel('acc')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.savefig('accuracy.png')
-plt.show()
 
 #validation loss and accuracy
 search_start = time.time()
@@ -146,7 +145,7 @@ loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "Validation accuracy: " + str(accuracy))
+print("Validation loss: " + str(loss) + "\nValidation accuracy: " + str(accuracy))
 
 #test loss and accuracy
 search_start = time.time()
@@ -154,7 +153,7 @@ loss, accuracy = model.evaluate(X_priv, priv_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Test loss: " + str(loss) + "Test accuracy: " + str(accuracy))
+print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
