@@ -33,7 +33,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 150
+num_epochs = 3
 width, height = 48, 48
 
 
@@ -100,16 +100,16 @@ def c_model():
                   metrics=['accuracy'])
     return model
 
-model = KerasClassifier(build_fn=c_model, epochs=50, batch_size=32)
+model = KerasClassifier(build_fn=c_model, epochs= num_epochs, batch_size=batch_size)
 
-model.fit(X_train, y_train)
+#model.fit(X_train, y_train)
 
 from sklearn.model_selection import GridSearchCV
 
 model = KerasClassifier(build_fn=c_model)
 
-batch_sizes = [10, 20, 50, 100]
-epochs = [50, 100, 150]
+batch_sizes = [5, 10]
+epochs = [5, 10]
 parameters = {'batch_size': batch_sizes, 'epochs': epochs}
 clf = GridSearchCV(model, parameters)
 clf.fit(X_train, y_train)
