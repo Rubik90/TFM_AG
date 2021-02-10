@@ -57,7 +57,7 @@ class model:
     return model
 
   def compile(self, model):
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.002)
+    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     
     model.compile(loss  = "categorical_crossentropy",
                   optimizer = optimizer,
@@ -66,9 +66,11 @@ class model:
     return model
 
   def fit(self, model, data_generator):
+    #callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
                         epochs = 20)
+                        #callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):
