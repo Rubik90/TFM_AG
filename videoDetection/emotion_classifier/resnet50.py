@@ -30,9 +30,9 @@ class model:
       data_generator[split] = preprocessing.image_dataset_from_directory(
         self.samples_dir[split],
         labels = "inferred",
-        label_mode = "categorical",
         class_names = ["0", "1", "2", "3", "4", "5", "6"],
         color_mode = "rgb",
+        label_mode="categorical",
         batch_size = 4,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
         shuffle = True,
