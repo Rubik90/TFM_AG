@@ -133,4 +133,5 @@ dmypy.json
 /audios/
 /videoDetection/model/*
 *.zip
-**/desktop.ini
+**/*/desktop.ini
+*.ini
