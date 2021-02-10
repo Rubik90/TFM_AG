@@ -29,9 +29,9 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 
-train_path = "../dataset/train_frames"
-val_path = "../dataset/val_frames"
-test_path = "../dataset/test_frames"
+train_path = "../affwild/train_frames"
+val_path = "../affwild/val_frames"
+test_path = "../affwild/test_frames"
 
 IMG_HEIGHT = 112
 IMG_WIDTH = 112
@@ -149,7 +149,7 @@ plt.savefig('accuracy.png')
 
 #test loss and accuracy
 search_start = time.time()
-loss, accuracy = model.evaluate(data_generator["test"])
+loss, accuracy = model.evaluate(data_generation["test"])
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))

@@ -70,7 +70,7 @@ class model:
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
                         epochs = 10,
-                        callback = [callbacks])
+                        callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):

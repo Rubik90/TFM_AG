@@ -2,7 +2,7 @@ import warnings
 warnings.simplefilter(action = 'ignore', category = FutureWarning)
 
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 import sys
 import tensorflow as tf
@@ -22,7 +22,6 @@ class model:
     self.IMG_WIDTH = 112
     self.NUM_CHANNELS = 3
     self.NUM_CLASSES = len(os.listdir(train_path))
-    self.path = "./resnet50.h5"
   
   def create_data_generator(self):
     data_generator = {}
@@ -40,7 +39,7 @@ class model:
         seed = None,
         validation_split = None,
         subset = None,
-        interpolation = "nearest",
+        interpolation = "gaussian",
         follow_links = False
       )
 
@@ -67,11 +66,9 @@ class model:
     return model
 
   def fit(self, model, data_generator):
-    callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
-                        epochs = 40,
-                        callbacks = [callback])
+                        epochs = 10)
     return model, history
 
   def plot_accuracy(self, history):
@@ -93,11 +90,10 @@ class model:
     plt.plot(history.history["loss"], label = "Train Loss")
     plt.plot(history.history["val_loss"], label = "Validation Loss")
     plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
+    plt.ylabel("Loss")
     plt.xscale("linear")
     plt.yscale("linear")
     plt.grid(True)
-    plt.ylim([0, 1])
     plt.legend(loc = "lower right")
     plt.show()
 
@@ -111,14 +107,21 @@ class model:
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("Test Evaluation Results.txt", "w")
+    f = open("test_evaluation_results.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
   def save(self, model):
-    model.save(self.path)
+    # Serialize model to JSON
+    model_json = model.to_json()
 
-    print(f"Model saved in {self.path}")
+    with open("resnet.json", "w") as json_file:             
+        json_file.write(model_json) 
+
+    # Serialize weights to HDF5
+    model.save_weights("resnet.h5")
+
+    print("Model saved to disk")
   
   def load(self):
     model = tf.keras.models.load_model(self.path)
@@ -136,7 +139,7 @@ class model:
     model = self.compile(model)
     model, history = self.fit(model, data_generator)
     self.plot_accuracy(history)
-    self.plot_accuracy(history)
+    self.plot_loss(history)
     self.evaluate(model, data_generator)
 
     return model, history
