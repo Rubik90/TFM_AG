@@ -1,6 +1,6 @@
 import sys
 import resnet50
-import resnet50Fer
+import conv2daffwild
 import vgg16
 
 if "--train_path" in sys.argv:
@@ -31,8 +31,8 @@ if model == "resnet50":
   model = resnet50.model(train_path, val_path, test_path)
 elif model == "vgg16":
   model = vgg16.model(train_path, val_path, test_path)
-elif model == "resnet60fer":
-  model = resnet50Fer.model(train_path, val_path, test_path)
+elif model == "conv2daffwild":
+  model = conv2daffwild.model(train_path, val_path, test_path)
 else:
   print("ERROR: Invalid value for param \"model\" (the only two possible values are \"resnet50\" and \"vgg_16\")")
   sys.exit()
