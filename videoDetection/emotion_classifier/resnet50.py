@@ -57,7 +57,7 @@ class model:
     return model
 
   def compile(self, model):
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.002)
     
     model.compile(loss  = "categorical_crossentropy",
                   optimizer = optimizer,
@@ -68,7 +68,7 @@ class model:
   def fit(self, model, data_generator):
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["validation"],
-                        epochs = 10)
+                        epochs = 20)
     return model, history
 
   def plot_accuracy(self, history):
