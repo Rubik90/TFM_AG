@@ -132,3 +132,4 @@ dmypy.json
 /annotations/
 /audios/
 /videoDetection/model/*
+*.zip
