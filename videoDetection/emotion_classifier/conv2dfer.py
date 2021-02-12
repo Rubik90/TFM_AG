@@ -104,7 +104,7 @@ model.add(Dropout(0.2))
 model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.2))
 
-model.add(Dense(num_labels, activation='sigmoid'))
+model.add(Dense(num_labels, activation='softmax'))
 #model.add(LSTM(64,return_sequences=True))
 
 model.summary()
@@ -121,7 +121,7 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_split = 0.4,
+          validation_split = 0.33,
           #validation_data=(X_test, test_y),
           shuffle=True)
 

@@ -9,7 +9,7 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from keras.utils import np_utils
-from tensorflow.keras.applications.resnet50 import ResNet50
+from tensorflow.keras.applications.vgg16 import VGG16
 import time
 
 df=pd.read_csv('../fer.csv')
@@ -37,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 15
+epochs = 10
 width, height = 48, 48
 
 
@@ -80,7 +80,7 @@ import matplotlib.pyplot as plt
 from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 print(X_train.shape[1:])
-model = ResNet50(include_top = True, weights = None, input_shape = (X_train.shape[1:]), pooling = "avg", classes = num_labels)
+model = VGG16(include_top = True, weights = None, input_shape = (X_train.shape[1:]), pooling = "avg", classes = num_labels)
 model.summary()
 
 callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
@@ -95,8 +95,8 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          #validation_split = 0.33,
-          validation_data=(X_test, test_y),
+          validation_split = 0.33,
+          #validation_data=(X_test, test_y),
           shuffle=True,
           callbacks = [callback])
 
@@ -107,7 +107,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('loss.png')
+plt.savefig('lossVggFer.png')
 plt.close()
 
         # Accuracy plotting
@@ -117,29 +117,30 @@ plt.title('model accuracy')
 plt.ylabel('acc')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('accuracy.png')
+plt.savefig('accuracyVggFer.png')
 
-#validation loss and accuracy
+#test loss and accuracy
 search_start = time.time()
 loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "\nValidation accuracy: " + str(accuracy))
-
-#test loss and accuracy
-search_start = time.time()
-loss, accuracy = model.evaluate(X_priv, priv_y)
-search_end = time.time()
-elapsed_time = search_end - search_start
-print("Elapsed time (s): "+str(elapsed_time))
 print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
+
+#save accuracy and loss on file
+test_loss, test_acc = model.evaluate(X_test, test_y)
+
+print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
+
+f = open("results_vggFer.txt", "w")
+f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
+f.close()
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("vidModel.json", "w") as json_file:
+with open("vidModelvggFer.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("vidModelWeights.h5")
+model.save_weights("vidModelWeightsvggFer.h5")
 
 
 

@@ -37,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 30
+epochs = 50
 width, height = 48, 48
 
 
@@ -95,7 +95,7 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_split = 0.2,
+          validation_split = 0.4,
           #validation_data=(X_test, test_y),
           shuffle=True,
           callbacks = [callback])
@@ -128,7 +128,7 @@ print("Elapsed time (s): "+str(elapsed_time))
 print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
 
 #save accuracy and loss on file
-test_loss, test_acc = model.evaluate(X_priv, priv_y)
+test_loss, test_acc = model.evaluate(X_test, test_y)
 
 print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
@@ -138,9 +138,9 @@ f.close()
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("vidModelResnetFer.json", "w") as json_file:
+with open("./models/vidModelResnetFer.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("vidModelWeightsResnetFer.h5")
+model.save_weights("./models/vidModelWeightsResnetFer.h5")
 
 
 
