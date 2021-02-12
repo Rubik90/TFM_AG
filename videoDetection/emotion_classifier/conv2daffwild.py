@@ -29,9 +29,9 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 
-train_path = "../affwild/train_frames"
-val_path = "../affwild/val_frames"
-test_path = "../affwild/test_frames"
+train_path = "../cleaned/train_frames"
+val_path = "../cleaned/val_frames"
+test_path = "../cleaned/test_frames"
 
 IMG_HEIGHT = 112
 IMG_WIDTH = 112

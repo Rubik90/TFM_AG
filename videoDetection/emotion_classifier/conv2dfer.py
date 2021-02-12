@@ -104,7 +104,7 @@ model.add(Dropout(0.2))
 model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.2))
 
-model.add(Dense(num_labels, activation='softmax'))
+model.add(Dense(num_labels, activation='sigmoid'))
 #model.add(LSTM(64,return_sequences=True))
 
 model.summary()
@@ -121,8 +121,8 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          #validation_split = 0.33,
-          validation_data=(X_test, test_y),
+          validation_split = 0.4,
+          #validation_data=(X_test, test_y),
           shuffle=True)
 
         # Loss plotting
@@ -132,7 +132,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('loss.png')
+plt.savefig('lossConv2Fer.png')
 plt.close()
 
         # Accuracy plotting
@@ -142,7 +142,7 @@ plt.title('model accuracy')
 plt.ylabel('acc')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('accuracy.png')
+plt.savefig('accuracyConv2Fer.png')
 
 #validation loss and accuracy
 search_start = time.time()
@@ -162,8 +162,8 @@ print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("vidModel.json", "w") as json_file:
+with open("vidModelConv2Fer.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("vidModelWeights.h5")
+model.save_weights("vidModelWeightsConv2Fer.h5")
 
 

@@ -37,7 +37,7 @@ for index, row in df.iterrows():
 num_features = 64
 num_labels = 7
 batch_size = 64
-epochs = 15
+epochs = 30
 width, height = 48, 48
 
 
@@ -95,8 +95,8 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          #validation_split = 0.33,
-          validation_data=(X_test, test_y),
+          validation_split = 0.2,
+          #validation_data=(X_test, test_y),
           shuffle=True,
           callbacks = [callback])
 
@@ -107,7 +107,7 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('loss.png')
+plt.savefig('lossResnetFer.png')
 plt.close()
 
         # Accuracy plotting
@@ -117,29 +117,30 @@ plt.title('model accuracy')
 plt.ylabel('acc')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('accuracy.png')
+plt.savefig('accuracyResnetFer.png')
 
-#validation loss and accuracy
+#test loss and accuracy
 search_start = time.time()
 loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "\nValidation accuracy: " + str(accuracy))
-
-#test loss and accuracy
-search_start = time.time()
-loss, accuracy = model.evaluate(X_priv, priv_y)
-search_end = time.time()
-elapsed_time = search_end - search_start
-print("Elapsed time (s): "+str(elapsed_time))
 print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
+
+#save accuracy and loss on file
+test_loss, test_acc = model.evaluate(X_priv, priv_y)
+
+print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
+
+f = open("results_resnetFer.txt", "w")
+f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
+f.close()
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("vidModel.json", "w") as json_file:
+with open("vidModelResnetFer.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("vidModelWeights.h5")
+model.save_weights("vidModelWeightsResnetFer.h5")
 
 
 
