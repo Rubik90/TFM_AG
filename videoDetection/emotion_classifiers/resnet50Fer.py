@@ -12,8 +12,7 @@ from keras.utils import np_utils
 from tensorflow.keras.applications.resnet50 import ResNet50
 import time
 import warnings
-warnings.simplefilter(action = 'ignore', category = FutureWarning)
-import subprocess 
+warnings.simplefilter(action = 'ignore', category = FutureWarning) 
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -155,10 +154,6 @@ def save_results(model,X_test, test_y):
     f = open("./results/results_resnetFer.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
-
-    file_ = open('./results/shell_resnetFer.txt', 'w+') 
-    subprocess.run('echo ResNetFer from shell', shell=True, stdout=file_) 
-    file_.close() 
 
 #Saving the  model to  use it later on
     mod_json = model.to_json()

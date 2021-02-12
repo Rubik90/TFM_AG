@@ -1,6 +1,6 @@
 import sys
-import resnet50
-import vgg16
+import keras_networks.resnet50
+import keras_networks.vgg16
 
 if "--train_path" in sys.argv:
   train_path = sys.argv[sys.argv.index("--train_path") + 1]
