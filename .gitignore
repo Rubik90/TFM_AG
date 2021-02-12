@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 /videoDetection/fer.csv
 /videoDetection/test.csv
+/videoDetection/emotion_classifiers/models/*
 /videos/
 /annotations/
 /audios/
