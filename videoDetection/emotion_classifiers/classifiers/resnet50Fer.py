@@ -122,7 +122,7 @@ def save_loss(cnn_history):
     plt.ylabel('loss')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('./media/lossResnetFer.png')
+    plt.savefig('../media/lossResnetFer.png')
     plt.close()
 
 def save_accuracy(cnn_history):
@@ -151,7 +151,7 @@ def save_results(model,X_test, test_y):
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("./results/results_resnetFer.txt", "w")
+    f = open("../results/results_resnetFer.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
@@ -159,7 +159,7 @@ def save_results(model,X_test, test_y):
     mod_json = model.to_json()
     with open("./models/vidModelResnetFer.json", "w") as json_file:
         json_file.write(mod_json)
-    model.save_weights("./models/vidModelWeightsResnetFer.h5")
+    model.save_weights("../models/vidModelWeightsResnetFer.h5")
 
 X_train,train_y,X_test,test_y, X_priv, priv_y = load_data()
 model=build()
