@@ -44,7 +44,7 @@ class audioModel:
                       metrics=['accuracy'])
 
         cnn_history = model.fit(x_traincnn, y_train,
-                               batch_size=128, epochs=90,
+                               batch_size=128, epochs=180,
                                validation_data= None,
                                validation_split = 0.4)
 

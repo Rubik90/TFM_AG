@@ -157,7 +157,7 @@ def save_results(model,X_test, test_y):
 
 #Saving the  model to  use it later on
     mod_json = model.to_json()
-    with open("./models/vidModelResnetFer.json", "w") as json_file:
+    with open("../models/vidModelResnetFer.json", "w") as json_file:
         json_file.write(mod_json)
     model.save_weights("../models/vidModelWeightsResnetFer.h5")
 
