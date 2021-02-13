@@ -111,7 +111,7 @@ def fit(model,X_train, train_y):
               shuffle=True,
               callbacks = [callback])
 
-    return model, history
+    return model, cnn_history
 
 def save_loss(cnn_history):
 
@@ -134,7 +134,7 @@ def save_accuracy(cnn_history):
     plt.ylabel('acc')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('./media/accuracyResnetFer.png')
+    plt.savefig('../media/accuracyResnetFer.png')
     plt.close()
 
 def save_results(model,X_test, test_y):

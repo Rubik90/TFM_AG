@@ -19,10 +19,9 @@ from config import SAVE_DIR_PATH
 from config import MODEL_DIR_PATH
 
 
-class TrainModel:
+class audioModel:
 
-    @staticmethod
-    def train_neural_network(X, y) -> None:
+    def NN(X, y) -> None:
 
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
@@ -41,13 +40,13 @@ class TrainModel:
         model.add(Activation('softmax'))
 
         model.compile(loss='sparse_categorical_crossentropy',
-                      optimizer='rmsprop',
+                      optimizer='Adam',
                       metrics=['accuracy'])
 
         cnn_history = model.fit(x_traincnn, y_train,
-                               batch_size=16, epochs=50,
+                               batch_size=128, epochs=90,
                                validation_data= None,
-                               validation_split = 0.33)
+                               validation_split = 0.4)
 
         model.summary()
         # Loss plotting
@@ -57,7 +56,7 @@ class TrainModel:
         plt.ylabel('loss')
         plt.xlabel('epoch')
         plt.legend(['train', 'test'], loc='upper left')
-        plt.savefig('loss.png')
+        plt.savefig('./media/loss.png')
         plt.close()
 
         # Accuracy plotting
@@ -67,7 +66,7 @@ class TrainModel:
         plt.ylabel('acc')
         plt.xlabel('epoch')
         plt.legend(['train', 'test'], loc='upper left')
-        plt.savefig('accuracy.png')
+        plt.savefig('./media/accuracy.png')
         plt.show()
         predictions = model.predict_classes(x_testcnn)
         new_y_test = y_test.astype(int)
@@ -84,6 +83,11 @@ class TrainModel:
         print("Elapsed time (s): "+str(elapsed_time))
         print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
         model_name = 'audioModel.h5'
+        print(f"\n Test Loss: {loss}, Test Accuracy: {accuracy}")
+
+        f = open("./results/results.txt", "w")
+        f.write(f"\n Test Loss: {loss}, Test Accuracy: {accuracy}")
+        f.close()
 
         # Save model and weights
         if not os.path.isdir(MODEL_DIR_PATH):
@@ -97,4 +101,5 @@ if __name__ == '__main__':
     print('Training started')
     X = joblib.load(SAVE_DIR_PATH + 'X.joblib')
     y = joblib.load(SAVE_DIR_PATH + 'y.joblib')
-    NEURAL_NET = TrainModel.train_neural_network(X=X, y=y)
+    audioModel.NN(X=X, y=y)
+
