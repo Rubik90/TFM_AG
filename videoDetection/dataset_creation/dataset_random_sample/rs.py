@@ -2,8 +2,8 @@ import os
 import numpy as np
 import shutil
 
-INPUT_DIR = "../../dataset/cleaned"
-OUTPUT_DIR = "../../dataset/random_sampled"
+INPUT_DIR = "../../datasets/swapped"
+OUTPUT_DIR = "../../datasets/random_sampled"
 
 if (os.path.exists(f"{OUTPUT_DIR}")):
     shutil.rmtree(f"{OUTPUT_DIR}")
@@ -20,7 +20,7 @@ for split in unbalanced_splits:
     for emotion in emotions:
         os.mkdir(f"{OUTPUT_DIR}/{split}/{emotions.index(emotion)}")
         frames = [f for f in os.listdir(f"{INPUT_DIR}/{split}/{emotion}/") if os.path.splitext(f)[1] == ".bmp"]
-        random_sampled_frames = np.random.choice(frames, 180, replace = False)
+        random_sampled_frames = np.random.choice(frames, 394, replace = False)
 
         for frame in random_sampled_frames:
             shutil.copy(f"{INPUT_DIR}/{split}/{emotion}/{frame}", f"{OUTPUT_DIR}/{split}/{emotions.index(emotion)}")

@@ -31,12 +31,11 @@ class model:
         self.samples_dir[split],
         labels = "inferred",
         label_mode = "categorical",
-        class_names = ["0", "1", "2", "3", "4", "5", "6"],
+        class_names = ["0","1","2","3","4","5","6"],
         color_mode = "rgb",
-        batch_size = 128,
+        batch_size = 32,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
         shuffle = True,
-        seed = 123,
         validation_split = None,
         subset = None,
         interpolation = "gaussian",
@@ -57,7 +56,7 @@ class model:
     return model
 
   def compile(self, model):
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
     
     model.compile(loss  = "categorical_crossentropy",
                   optimizer = optimizer,
@@ -66,11 +65,11 @@ class model:
     return model
 
   def fit(self, model, data_generator):
-    #callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+    callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["val"],
-                        epochs = 5)
-                        #callbacks = [callback])
+                        epochs = 10,
+                        callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):
@@ -86,7 +85,7 @@ class model:
     plt.legend(loc = "lower right")
     plt.show()
 
-    plt.savefig("accuracy.png")
+    plt.savefig("../media/accuracy.png")
     plt.close()
   
   def plot_loss(self, history):
@@ -101,7 +100,7 @@ class model:
     plt.show()
 
     # Saves the diagram for further use
-    plt.savefig('loss.png')
+    plt.savefig('../media/loss.png')
     plt.close()
   
   def evaluate(self, model, data_generator):
@@ -110,7 +109,7 @@ class model:
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("test_evaluation_results.txt", "w")
+    f = open("../results/test_evaluation_results.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
@@ -118,11 +117,11 @@ class model:
     # Serialize model to JSON
     model_json = model.to_json()
 
-    with open("resnet.json", "w") as json_file:             
+    with open("../models/resnet.json", "w") as json_file:             
         json_file.write(model_json) 
 
     # Serialize weights to HDF5
-    model.save_weights("resnet.h5")
+    model.save_weights("../models/resnet.h5")
 
     print("Model saved to disk")
   

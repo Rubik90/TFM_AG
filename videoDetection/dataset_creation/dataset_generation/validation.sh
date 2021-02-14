@@ -1,1 +1,1 @@
-python3 dataset_gen.py --videos_path "../../features/aligned_face/" --annotations_path "../../../../Expression_Set/annotations/Validation_Set/" --dataset_path "../../datasets/val_frames/"
+python3 dataset_gen.py --videos_path "/home/workspace/raw_aligned/val_aligned/" --annotations_path "../../../../Expression_Set/annotations/Train_Set/" --dataset_path "../../datasets/definitive/val_frames/"

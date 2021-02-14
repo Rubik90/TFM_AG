@@ -65,7 +65,7 @@ for video in videos:
             for i in range(1, len(frames) - 1):
                 annotation_value = int(lines[i])
                 
-                print("", end=f"\rProgress: [{i}/{len(frames)}]")
+                print("", end=f"\rProgress: [{i + 1}/{len(frames) - 1}]")
 
                 if (annotation_value >= 0 and annotation_value <= 6):  # Skip untagged frames
                     shutil.copy2(f'{videos_path}/{video}/{frames[i]}', f'{dataset_path}/{emotions[int(lines[i])]}')
