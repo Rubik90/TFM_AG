@@ -130,6 +130,7 @@ dmypy.json
 /videoDetection/datasets/*
 /videoDetection/datasets/test.csv
 /videoDetection/features/*
+/videoDetection/processed/*
 /videoDetection/emotion_classifiers/models/*
 /videos/
 /annotations/
