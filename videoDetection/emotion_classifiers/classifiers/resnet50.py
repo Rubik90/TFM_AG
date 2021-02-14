@@ -11,16 +11,17 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 class model:
-  def __init__(self, train_val_path, test_path):
+  def __init__(self, train_path, val_path, test_path):
     # Define local directories where datasets are stored
     self.samples_dir = {
-      "train": train_val_path,
+      "train": train_path,
+      "val": val_path,
       "test": test_path
     }
     self.IMG_HEIGHT = 112
     self.IMG_WIDTH = 112
     self.NUM_CHANNELS = 3
-    self.NUM_CLASSES = len(os.listdir(train_val_path))
+    self.NUM_CLASSES = len(os.listdir(train_path))
   
   def create_data_generator(self):
     data_generator = {}
@@ -32,12 +33,12 @@ class model:
         label_mode = "categorical",
         class_names = ["0", "1", "2", "3", "4", "5", "6"],
         color_mode = "rgb",
-        batch_size = 4,
+        batch_size = 128,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
         shuffle = True,
         seed = 123,
-        validation_split = 0.4,
-        subset = 'validation',
+        validation_split = None,
+        subset = None,
         interpolation = "gaussian",
         follow_links = False
       )
@@ -56,7 +57,7 @@ class model:
     return model
 
   def compile(self, model):
-    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.001)
+    optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001)
     
     model.compile(loss  = "categorical_crossentropy",
                   optimizer = optimizer,
@@ -67,15 +68,15 @@ class model:
   def fit(self, model, data_generator):
     #callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
-                        validation_data = None,
-                        epochs = 10)
+                        validation_data = data_generator["val"],
+                        epochs = 5)
                         #callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):
     print(history.history)
     plt.plot(history.history["accuracy"], label = "Train Accuracy")
-    #plt.plot(history.history["val_acc"], label = "Validation Accuracy")
+    plt.plot(history.history["val_accuracy"], label = "Validation Accuracy")
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
     plt.xscale("linear")
@@ -90,7 +91,7 @@ class model:
   
   def plot_loss(self, history):
     plt.plot(history.history["loss"], label = "Train Loss")
-    #plt.plot(history.history["val_loss"], label = "Validation Loss")
+    plt.plot(history.history["val_loss"], label = "Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.xscale("linear")
