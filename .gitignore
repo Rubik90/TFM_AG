@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 /videoDetection/datasets/test.csv
 /videoDetection/datasets/original
+/videoDetection/datasets/cleaned
 /videoDetection/datasets/fer.csv
 /videoDetection/features/*
 /videoDetection/processed/*
