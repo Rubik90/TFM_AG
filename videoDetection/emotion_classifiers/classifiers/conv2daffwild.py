@@ -29,9 +29,8 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 
-train_path = "../datasets/cleaned/train_frames"
-val_path = "../datasets/cleaned/val_frames"
-test_path = "../datasets/cleaned/test_frames"
+train_path = "../../datasets/final/train_val_frames"
+test_path = "../../datasets/final/test_frames"
 
 IMG_HEIGHT = 112
 IMG_WIDTH = 112
@@ -41,18 +40,17 @@ path = "./Con2DAffwild.h5"
 batch_size = 8
 epochs = 15
 
-def init(train_path, val_path, test_path):
+def init(train_path, test_path):
     # Define local directories where datasets are stored
     samples_dir = {
       "train": train_path,
-      "validation": val_path,
       "test": test_path
     }
     return samples_dir
 
-def create_data_generator(train_path, val_path, test_path):
+def create_data_generator(train_path, test_path):
 
-  samples_dir = init(train_path, val_path, test_path)
+  samples_dir = init(train_path, test_path)
   data_generator = {}
 
   for split in samples_dir:
@@ -65,9 +63,9 @@ def create_data_generator(train_path, val_path, test_path):
       batch_size = 4,
       image_size = (IMG_HEIGHT, IMG_WIDTH),
       shuffle = True,
-      seed = None,
-      validation_split = None,
-      subset = None,
+      seed = 123,
+      subset = 'validation',
+      validation_split = 0.4,
       interpolation = "gaussian",
       follow_links = False
     )
@@ -118,19 +116,18 @@ model.compile(loss=categorical_crossentropy,
               optimizer=Adam(),
               metrics=['accuracy'])
 
-data_generation = create_data_generator(train_path, val_path, test_path)
+data_generation = create_data_generator(train_path, test_path)
 #Training the model
 cnn_history = model.fit(data_generation["train"],
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          #validation_split = 0.33,
-          validation_data=data_generation["validation"],
+          #validation_data=data_generation["validation"],
           shuffle=True)
 
         # Loss plotting
 plt.plot(cnn_history.history['loss'])
-plt.plot(cnn_history.history['val_loss'])
+#plt.plot(cnn_history.history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
@@ -140,7 +137,7 @@ plt.close()
 
         # Accuracy plotting
 plt.plot(cnn_history.history['accuracy'])
-plt.plot(cnn_history.history['val_accuracy'])
+#plt.plot(cnn_history.history['val_accuracy'])
 plt.title('model accuracy')
 plt.ylabel('acc')
 plt.xlabel('epoch')

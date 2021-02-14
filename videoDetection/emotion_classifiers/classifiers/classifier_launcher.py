@@ -1,16 +1,10 @@
 import sys
 import resnet50
 import vgg16
-if "--train_path" in sys.argv:
-  train_path = sys.argv[sys.argv.index("--train_path") + 1]
+if "--train_val_path" in sys.argv:
+  train_val_path = sys.argv[sys.argv.index("--train_val_path") + 1]
 else:
   print("ERROR: No value specified for parameter \"train_path\" ")
-  sys.exit()
-
-if "--val_path" in sys.argv:
-  val_path = sys.argv[sys.argv.index("--val_path") + 1]
-else:
-  print("ERROR: No value specified for parameter \"val_path\" ")
   sys.exit()
     
 if "--test_path" in sys.argv:
@@ -26,9 +20,9 @@ else:
   sys.exit()
     
 if model == "resnet50":
-  model = resnet50.model(train_path, val_path, test_path)
+  model = resnet50.model(train_val_path, test_path)
 elif model == "vgg16":
-  model = vgg16.model(train_path, val_path, test_path)
+  model = vgg16.model(train_val_path, test_path)
 else:
   print("ERROR: Invalid value for param \"model\" (the only two possible values are \"resnet50\" and \"vgg_16\")")
   sys.exit()

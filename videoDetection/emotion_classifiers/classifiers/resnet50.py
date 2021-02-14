@@ -11,17 +11,16 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 class model:
-  def __init__(self, train_path, val_path, test_path):
+  def __init__(self, train_val_path, test_path):
     # Define local directories where datasets are stored
     self.samples_dir = {
-      "train": train_path,
-      "validation": val_path,
+      "train": train_val_path,
       "test": test_path
     }
     self.IMG_HEIGHT = 112
     self.IMG_WIDTH = 112
     self.NUM_CHANNELS = 3
-    self.NUM_CLASSES = len(os.listdir(train_path))
+    self.NUM_CLASSES = len(os.listdir(train_val_path))
   
   def create_data_generator(self):
     data_generator = {}
@@ -36,9 +35,9 @@ class model:
         batch_size = 4,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),
         shuffle = True,
-        seed = None,
-        validation_split = None,
-        subset = None,
+        seed = 123,
+        validation_split = 0.4,
+        subset = 'validation',
         interpolation = "gaussian",
         follow_links = False
       )
@@ -68,14 +67,15 @@ class model:
   def fit(self, model, data_generator):
     #callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
-                        validation_data = data_generator["validation"],
+                        validation_data = None,
                         epochs = 10)
                         #callbacks = [callback])
     return model, history
 
   def plot_accuracy(self, history):
+    print(history.history)
     plt.plot(history.history["accuracy"], label = "Train Accuracy")
-    plt.plot(history.history["val_accuracy"], label = "Validation Accuracy")
+    #plt.plot(history.history["val_acc"], label = "Validation Accuracy")
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy")
     plt.xscale("linear")
@@ -90,7 +90,7 @@ class model:
   
   def plot_loss(self, history):
     plt.plot(history.history["loss"], label = "Train Loss")
-    plt.plot(history.history["val_loss"], label = "Validation Loss")
+    #plt.plot(history.history["val_loss"], label = "Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
     plt.xscale("linear")

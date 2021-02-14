@@ -1,0 +1,4 @@
+paste <(printf "%s\n" $1) <(printf "%s\n" * | shuf) |
+  while IFS=$'\t' read -r from to; do mv -- "$from" "$to.new"; done
+
+for f in *.new; do mv -- "$f" "${f%.new}"; done 
