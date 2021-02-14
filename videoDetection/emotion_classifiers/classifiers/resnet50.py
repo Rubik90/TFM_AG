@@ -73,7 +73,6 @@ class model:
     return model, history
 
   def plot_accuracy(self, history):
-    print(history.history)
     plt.plot(history.history["accuracy"], label = "Train Accuracy")
     plt.plot(history.history["val_accuracy"], label = "Validation Accuracy")
     plt.xlabel("Epoch")
