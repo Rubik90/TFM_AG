@@ -133,6 +133,7 @@ dmypy.json
 /videoDetection/datasets/shuffled
 /videoDetection/datasets/swapped
 /videoDetection/datasets/random_sampled
+/videoDetection/datasets/balanced
 /videoDetection/datasets/fer.csv
 /videoDetection/features/*
 /videoDetection/processed/*
