@@ -128,6 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /videoDetection/datasets/test.csv
+/videoDetection/datasets/affwild
+/videoDetection/datasets/cleaned
+/videoDetection/datasets/cleaned2
+/videoDetection/datasets/fer.csv
+/videoDetection/datasets/original2
 /videoDetection/features/*
 /videoDetection/processed/*
 /videoDetection/emotion_classifiers/models/*
