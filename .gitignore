@@ -137,7 +137,7 @@ dmypy.json
 /videoDetection/datasets/fer.csv
 /videoDetection/features/*
 /videoDetection/processed/*
-#/audioDetection/RAVDESS_TESS_dataset/*
+/audioDetection/RAVDESS_TESS_dataset/*
 /videoDetection/emotion_classifiers/models/*
 /videos/
 /annotations/
