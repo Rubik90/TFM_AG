@@ -37,13 +37,17 @@ for emotion in emotions:
     prev_bound = 0
 
     for index, split in enumerate(splits):
-        bound = prev_bound + math.min(math.ceil(num_frames * ratios[index]), num_frames)
+        bound = prev_bound + min(math.ceil(num_frames * ratios[index]), num_frames)
         split_frames = frames[prev_bound:bound]
         prev_bound = bound
 
-        for frame in split_frames:
-            shutil.copy(f"{OUTPUT_DIR}/{emotion}/{frame}",
-                        f"{OUTPUT_DIR}/{split}/{emotion}")
-	
-        shutil.rmtree(f"{OUTPUT_DIR}/{emotion}")
+        if (not os.path.exists(f"{OUTPUT_DIR}/{split}")):
+            os.mkdir(f"{OUTPUT_DIR}/{split}")
+        
+        if (not os.path.exists(f"{OUTPUT_DIR}/{split}/{emotion}")):
+            os.mkdir(f"{OUTPUT_DIR}/{split}/{emotion}")
 
+        for frame in split_frames:
+            shutil.copy(f"{OUTPUT_DIR}/{emotion}/{frame}", f"{OUTPUT_DIR}/{split}/{emotion}")
+	
+    shutil.rmtree(f"{OUTPUT_DIR}/{emotion}")

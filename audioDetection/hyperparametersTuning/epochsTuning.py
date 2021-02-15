@@ -32,7 +32,7 @@ from config import MODEL_DIR_PATH
 X = joblib.load(SAVE_DIR_PATH + 'X.joblib')
 y = joblib.load(SAVE_DIR_PATH + 'y.joblib')
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
 
 x_traincnn = np.expand_dims(X_train, axis=2)
 x_testcnn = np.expand_dims(X_test, axis=2)
@@ -61,7 +61,7 @@ from keras.wrappers.scikit_learn import KerasClassifier
 model = KerasClassifier(build_fn=c_model)
 
 batch_sizes = [64, 128]
-epochs = [30, 60, 90]
+epochs = [50, 10, 150]
 parameters = {'batch_size': batch_sizes, 'epochs': epochs}
 clf = GridSearchCV(model, parameters)
 clf.fit(x_traincnn, y_train)

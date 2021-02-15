@@ -31,7 +31,7 @@ class model:
         self.samples_dir[split],
         labels = "inferred",
         label_mode = "categorical",
-        class_names = ["0","1","2","3","4","5","6"],
+        class_names = ["Neutral","Anger","Disgust","Fear","Happiness","Sadness","Surprise"],
         color_mode = "rgb",
         batch_size = 32,
         image_size = (self.IMG_HEIGHT, self.IMG_WIDTH),

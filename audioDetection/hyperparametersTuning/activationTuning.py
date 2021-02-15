@@ -30,7 +30,7 @@ from config import SAVE_DIR_PATH
 from config import MODEL_DIR_PATH
 
 batch_size = 128
-epochs = 90
+epochs = 150
 
 X = joblib.load(SAVE_DIR_PATH + 'X.joblib')
 y = joblib.load(SAVE_DIR_PATH + 'y.joblib')
