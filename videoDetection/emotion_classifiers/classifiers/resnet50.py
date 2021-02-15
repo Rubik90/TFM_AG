@@ -82,9 +82,11 @@ class model:
     plt.grid(True)
     plt.ylim([0, 1])
     plt.legend(loc = "lower right")
-    plt.show()
 
     plt.savefig("../media/accuracy.png")
+
+    plt.show()
+
     plt.close()
   
   def plot_loss(self, history):
@@ -96,10 +98,12 @@ class model:
     plt.yscale("linear")
     plt.grid(True)
     plt.legend(loc = "lower right")
-    plt.show()
 
     # Saves the diagram for further use
     plt.savefig('../media/loss.png')
+
+    plt.show()
+
     plt.close()
   
   def evaluate(self, model, data_generator):
@@ -142,5 +146,6 @@ class model:
     self.plot_accuracy(history)
     self.plot_loss(history)
     self.evaluate(model, data_generator)
+    self.save(model)
 
     return model, history
