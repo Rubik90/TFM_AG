@@ -85,14 +85,14 @@ if __name__ == '__main__':
         print("Multimodal emotion prediction at second " + str(i) +" is :" + audio_prediction)
       else:
         print("The singles modalities predictions do not match")
-    #cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
+      #cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
       i=i+1
-    # resized_img = cv2.resize(test_img, (1000, 700))
-    # cv2.imshow('Emotion analysis ',resized_img)
+      #resized_img = cv2.resize(test_img, (1000, 700))
+      #cv2.imshow('Emotion analysis ',resized_img)
 
 
-    # if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
-    # break
+    #if cv2.waitKey(10) == ord('q'):#wait until 'q' key is pressed
+    #break
 
     cap.release()
     cv2.destroyAllWindows

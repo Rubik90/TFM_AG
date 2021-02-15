@@ -68,7 +68,7 @@ class model:
     callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["val"],
-                        epochs = 10,
+                        epochs = 30,
                         callbacks = [callback])
     return model, history
 
