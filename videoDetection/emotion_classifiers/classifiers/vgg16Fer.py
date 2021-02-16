@@ -9,7 +9,7 @@ from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
 from keras.utils import np_utils
-from tensorflow.keras.applications.resnet50 import ResNet50
+from tensorflow.keras.applications.vgg16 import VGG16
 import time
 import warnings
 warnings.simplefilter(action = 'ignore', category = FutureWarning)
@@ -102,14 +102,14 @@ def fit(model,X_train, train_y):
               batch_size=batch_size,
               epochs=epochs,
               verbose=1,
-              validation_split = 0.4,
+              #validation_split = 0.4,
               use_multiprocessing = True,
               #validation_steps = 270,
-              #validation_data=(X_test, test_y),
+              validation_data=(X_test, test_y),
               shuffle=True,
               callbacks = [callback])
 
-    return model, history
+    return model, cnn_history
 
 def save_loss(cnn_history):
 
@@ -138,7 +138,7 @@ def save_accuracy(cnn_history):
 def save_results(model,X_test, test_y):
 #test loss and accuracy
     search_start = time.time()
-    loss, accuracy = model.evaluate(X_test, test_y)
+    loss, accuracy = model.evaluate(X_priv, priv_y)
     search_end = time.time()
     elapsed_time = search_end - search_start
     print("Elapsed time (s): "+str(elapsed_time))
