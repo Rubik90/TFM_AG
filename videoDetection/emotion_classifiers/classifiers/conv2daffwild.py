@@ -29,9 +29,9 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 
-train_path = "../../datasets/balanced/train_frames"
-val_path = "../../datasets/balanced/val_frames"
-test_path = "../../datasets/balanced/test_frames"
+train_path = "../../datasets/shuffled_balanced/train_frames"
+val_path = "../../datasets/shuffled_balanced/val_frames"
+test_path = "../../datasets/shuffled_balanced/test_frames"
 
 IMG_HEIGHT = 112
 IMG_WIDTH = 112
@@ -60,7 +60,7 @@ def create_data_generator(train_path, val_path, test_path):
       samples_dir[split],
       labels = "inferred",
       label_mode = "categorical",
-      class_names = ["0", "1", "2", "3", "4", "5", "6"],
+      class_names = ["Neutral","Anger","Disgust","Fear","Happiness","Sadness","Surprise"],
       color_mode = "rgb",
       batch_size = 32,
       image_size = (IMG_HEIGHT, IMG_WIDTH),
