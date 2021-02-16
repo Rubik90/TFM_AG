@@ -22,7 +22,7 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 num_features = 64
 num_labels = 7
 batch_size = 32
-epochs = 30
+epochs = 40
 width, height = 48, 48
 
 def load_data():
@@ -120,7 +120,7 @@ def save_loss(cnn_history):
     plt.ylabel('loss')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('../media/lossvggFer.png')
+    plt.savefig('../media/lossVggFer.png')
     plt.close()
 
 def save_accuracy(cnn_history):
@@ -132,7 +132,7 @@ def save_accuracy(cnn_history):
     plt.ylabel('acc')
     plt.xlabel('epoch')
     plt.legend(['train', 'test'], loc='upper left')
-    plt.savefig('../media/accuracyvggFer.png')
+    plt.savefig('../media/accuracyVggFer.png')
     plt.close()
 
 def save_results(model,X_priv, priv_y):
@@ -149,15 +149,15 @@ def save_results(model,X_priv, priv_y):
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("./results/results_vggFer.txt", "w")
+    f = open("../results/results_vggFer.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
 #Saving the  model to  use it later on
     mod_json = model.to_json()
-    with open("./models/vidModelVggFer.json", "w") as json_file:
+    with open("../models/vidModelVggFer.json", "w") as json_file:
         json_file.write(mod_json)
-    model.save_weights("./models/vidModelWeightsVggFer.h5")
+    model.save_weights("../models/vidModelWeightsVggFer.h5")
 
 X_train,train_y,X_test,test_y, X_priv, priv_y = load_data()
 model=build()
