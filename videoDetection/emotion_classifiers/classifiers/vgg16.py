@@ -69,7 +69,7 @@ class model:
     callback = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=3)
     history = model.fit(data_generator["train"],
                         validation_data = data_generator["val"],
-                        epochs = 30,
+                        epochs = 20,
                         callbacks = [callback])
     return model, history
 
@@ -111,7 +111,7 @@ class model:
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("test_evaluation_results.txt", "w")
+    f = open("../results/vgg_results.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
