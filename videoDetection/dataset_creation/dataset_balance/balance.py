@@ -3,8 +3,8 @@ import numpy as np
 import shutil
 import math
 
-INPUT_DIR = "../../datasets/cleaned"
-OUTPUT_DIR = "../../datasets/balanced"
+INPUT_DIR = "../../datasets/shuffled"
+OUTPUT_DIR = "../../datasets/shuffled_balanced"
 
 splits = ["train_frames", "val_frames", "test_frames"]
 emotions = ["Anger", "Disgust", "Fear",
