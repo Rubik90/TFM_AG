@@ -21,8 +21,8 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 
 num_features = 64
 num_labels = 7
-batch_size = 32
-epochs = 40
+batch_size = 8
+epochs = 20
 width, height = 48, 48
 
 def load_data():
