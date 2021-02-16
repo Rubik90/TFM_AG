@@ -128,7 +128,7 @@ cnn_history = model.fit(data_generation["train"],
 
         # Loss plotting
 plt.plot(cnn_history.history['loss'])
-#plt.plot(cnn_history.history['val_loss'])
+plt.plot(cnn_history.history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
@@ -138,7 +138,7 @@ plt.close()
 
         # Accuracy plotting
 plt.plot(cnn_history.history['accuracy'])
-#plt.plot(cnn_history.history['val_accuracy'])
+plt.plot(cnn_history.history['val_accuracy'])
 plt.title('model accuracy')
 plt.ylabel('acc')
 plt.xlabel('epoch')
