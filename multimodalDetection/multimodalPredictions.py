@@ -30,13 +30,13 @@ class audioPredictions:
     def convert_class_to_emotion(pred):
 
         label_conversion = {'0': 'neutral',
-                            '1': 'calm',
+                            '1': 'neutral',
                             '2': 'happy',
                             '3': 'sad',
                             '4': 'angry',
-                            '5': 'fearful',
+                            '5': 'fear',
                             '6': 'disgust',
-                            '7': 'surprised'}
+                            '7': 'surprise'}
 
         for key, value in label_conversion.items():
             if int(key) == pred:
