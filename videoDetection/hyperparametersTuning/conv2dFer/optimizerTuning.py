@@ -10,10 +10,12 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization,AveragePooling
 from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
+from sklearn.model_selection import GridSearchCV
+from keras.wrappers.scikit_learn import KerasClassifier
 
 np.random.seed(0)
 
-df=pd.read_csv('../datasets/fer.csv')
+df=pd.read_csv('../../datasets/fer.csv')
 
 print(df.info())
 
@@ -34,8 +36,8 @@ for index, row in df.iterrows():
 
 num_features = 64
 num_labels = 7
-batch_size = 64
-epochs = 150
+batch_size = 100
+epochs = 10
 width, height = 48, 48
 
 
@@ -101,7 +103,7 @@ def c_model(optimizer):
                   metrics=['accuracy'])
     return model
 
-model = KerasClassifier(build_fn=c_model, epochs=50, batch_size=32)
+model = KerasClassifier(build_fn=c_model, epochs=epochs, batch_size=batch_size)
 parameters = {'optimizer':['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam']}
 clf = GridSearchCV(model, parameters)
 clf.fit(X_train, y_train)

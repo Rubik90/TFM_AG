@@ -10,6 +10,8 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization,AveragePooling
 from keras.losses import categorical_crossentropy
 from keras.optimizers import Adam
 from keras.regularizers import l2
+from sklearn.model_selection import GridSearchCV
+from keras.wrappers.scikit_learn import KerasClassifier
 
 np.random.seed(0)
 
@@ -96,8 +98,6 @@ def c_model():
                   optimizer=Adam(),
                   metrics=['accuracy'])
     return model
-
-from sklearn.model_selection import GridSearchCV
 
 model = KerasClassifier(build_fn=c_model)
 
