@@ -133,11 +133,6 @@ class model:
 
     return model
 
-  def predict_generator(self, data_generator):
-    prediction = model.predict_generator(generator = data_generator)
-    
-    print(prediction)
-
   def run(self):
     data_generator = self.create_data_generator()
     model = self.build(print_summary = True)
