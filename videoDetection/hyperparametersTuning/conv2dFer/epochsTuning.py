@@ -13,7 +13,7 @@ from keras.regularizers import l2
 
 np.random.seed(0)
 
-df=pd.read_csv('dataset.csv')
+df=pd.read_csv('../datasets/fer.csv')
 
 X_train,y_train,X_test,test_y=[],[],[],[]
 
@@ -90,19 +90,12 @@ def c_model():
     model.add(Dropout(0.2))
 
     model.add(Dense(num_labels, activation='softmax'))
-#model.add(LSTM(64,return_sequences=True))
-
-    model.summary()
 
 #Compliling the model
     model.compile(loss=categorical_crossentropy,
                   optimizer=Adam(),
                   metrics=['accuracy'])
     return model
-
-#model = KerasClassifier(build_fn=c_model, epochs= num_epochs, batch_size=batch_size)
-
-#model.fit(X_train, y_train)
 
 from sklearn.model_selection import GridSearchCV
 
