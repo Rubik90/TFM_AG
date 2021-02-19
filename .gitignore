@@ -138,6 +138,7 @@ dmypy.json
 /videoDetection/datasets/balanced
 /videoDetection/emotion_classifiers/models/*
 /videoDetection/datasets/fer.csv
+/videoDetection/datasets/shuffled_balanced.rar
 /videoDetection/features/*
 /videoDetection/processed/*
 /audioDetection/RAVDESS_TESS_dataset/*
