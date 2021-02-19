@@ -1,2 +1,2 @@
 cd ../../classifiers
-python3 classifier_launcher.py --train_path "../../datasets/balanced/train_frames" --val_path "../../datasets/balanced/val_frames" --test_path "../../datasets/balanced/test_frames" --model "resnet50"
+python3 classifier_launcher.py --train_path "/content/shuffled_balanced/train_frames" --val_path "/content/shuffled_balanced/val_frames" --test_path "/content/shuffled_balanced/test_frames" --model "resnet50"

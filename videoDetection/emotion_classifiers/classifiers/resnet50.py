@@ -112,7 +112,7 @@ class model:
 
     print(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
 
-    f = open("../results/test_evaluation_results.txt", "w")
+    f = open("../results/test_evaluation_resnet.txt", "w")
     f.write(f"\n Test Loss: {test_loss}, Test Accuracy: {test_acc}")
     f.close()
 
