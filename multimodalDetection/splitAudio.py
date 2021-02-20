@@ -1,11 +1,11 @@
 import subprocess
 import os
 import shutil
-def extract_audio(video,output):
-    command = f"ffmpeg -i '{video}' -f segment -segment_time 0.041666666 -c copy {output}"
+def split(audio,output):
+    command = f"ffmpeg -i '{audio}' -f segment -segment_time 0.0416666666666667 -c copy {output}"
     subprocess.call(command,shell=True)
 
-extract_audio('audio.wav','out%03d.wav')
+split('audio.wav','out%03d.wav')
 elements = os.listdir('./')
 
 if(os.path.isdir("./audioChunks/")):

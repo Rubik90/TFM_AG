@@ -11,6 +11,7 @@ os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 import moviepy.editor
 import sys
 import shutil
+import subprocess
 
 class audioPredictions:
 
@@ -48,7 +49,7 @@ class audioPredictions:
         return label
 
 if __name__ == '__main__':
-    video = "./anto.avi"
+    video = "./9930.mp4"
     vid = moviepy.editor.VideoFileClip(video)
     audio = vid.audio
     audio.write_audiofile("./" + "audio.wav")
