@@ -144,6 +144,7 @@ dmypy.json
 /audioDetection/RAVDESS_TESS_dataset/*
 /videoDetection/emotion_classifiers/models/*
 /multimodalDetection/models/*
+/multimodalDetection/audioChunks/*
 *.zip
 **/*/desktop.ini
 *.ini
