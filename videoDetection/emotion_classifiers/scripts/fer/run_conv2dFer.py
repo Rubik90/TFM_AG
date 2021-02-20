@@ -1,7 +1,7 @@
 import subprocess, os
 #comment the first two lines and uncomment the rest of the snippet code to save the entire output on file
-os.chdir('../classifiers')
-os.system('python3 resnet50Fer.py')
+os.chdir('../../classifiers')
+os.system('python3 conv2dfer.py')
 
 """
 os.chdir('../')
