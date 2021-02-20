@@ -29,9 +29,9 @@ from tensorflow.keras import preprocessing, datasets, layers, models
 from tensorflow.keras.applications.resnet50 import ResNet50
 
 
-train_path = "../../datasets/shuffled_balanced/train_frames"
-val_path = "../../datasets/shuffled_balanced/val_frames"
-test_path = "../../datasets/shuffled_balanced/test_frames"
+train_path = "/content/shuffled_balanced/train_frames"
+val_path = "/content/shuffled_balanced/val_frames"
+test_path = "/content/shuffled_balanced/test_frames"
 
 IMG_HEIGHT = 112
 IMG_WIDTH = 112
@@ -155,8 +155,8 @@ print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("../models/vidModelConv2DFer.json", "w") as json_file:
+with open("../models/vidModelConv2DAff.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("../models/vidModelWeightsConv2DFer.h5")
+model.save_weights("../models/vidModelWeightsConv2DAff.h5")
 
 

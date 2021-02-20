@@ -12,16 +12,12 @@ import moviepy.editor
 import sys
 import shutil
 
-video = "./93.mp4"
-vid = moviepy.editor.VideoFileClip(video)
-audio = vid.audio
-audio.write_audiofile("./" + "audio.wav")
 class audioPredictions:
 
     def __init__(self, file):
 
         self.file = file
-        self.path = './models/Affwild/audioModel.h5'
+        self.path = './models/audioModel.h5'
         self.loaded_model = keras.models.load_model(self.path)
 
     def make_predictions(self):
@@ -52,13 +48,17 @@ class audioPredictions:
         return label
 
 if __name__ == '__main__':
+    video = "./anto.avi"
+    vid = moviepy.editor.VideoFileClip(video)
+    audio = vid.audio
+    audio.write_audiofile("./" + "audio.wav")
     # load model
-    model = model_from_json(open("./models/Affwild/resnetAff.json", "r").read())
+    model = model_from_json(open("./models/vidModelConv2Fer.json", "r").read())
     # load weights
-    model.load_weights('./models/Affwild/resnetAff.h5')
+    model.load_weights('./models/vidModelWeightsConv2Fer.h5')
     face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-    cap = cv2.VideoCapture("93.mp4")
+    cap = cv2.VideoCapture(video)
     chunks = os.listdir("./audioChunks/")
     i=0
 
@@ -78,15 +78,18 @@ if __name__ == '__main__':
       if not ret:
           continue
 
+      gray_img= cv2.cvtColor(test_img, cv2.COLOR_BGR2GRAY)
+
       faces_detected = face_haar_cascade.detectMultiScale(test_img, 1.32, 5)
       visual_prediction = ""
       audio_prediction = ""
 
       for (x, y, w, h) in faces_detected:
         cv2.rectangle(test_img, (x, y), (x + w, y + h), (255, 0, 0), thickness=7)
-        #roi_gray = gray_img[y:y + w, x:x + h]  # cropping region of interest i.e. face area from  image
-        test_img = cv2.resize(test_img, (112, 112))
-        img_pixels = image.img_to_array(test_img)
+        roi_gray = gray_img[y:y + w, x:x + h]  # cropping region of interest i.e. face area from  image
+        #test_img = cv2.resize(test_img, (112, 112))
+        roi_gray = cv2.resize(roi_gray, (48, 48))
+        img_pixels = image.img_to_array(roi_gray)
         img_pixels = np.expand_dims(img_pixels, axis=0)
         img_pixels /= 255
 
@@ -94,8 +97,8 @@ if __name__ == '__main__':
 
         # find max indexed array
         max_index = np.argmax(predictions[0])
-
-        emotions = ("neutral","angry","disgusted","scared","happy","sad","surprised")
+        emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
+        #emotions = ("neutral","angry","disgusted","scared","happy","sad","surprised")
         visual_prediction = emotions[max_index]
 
         audio_prediction = live_prediction.make_predictions()
