@@ -121,7 +121,7 @@ cnn_history = model.fit(X_train, train_y,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_split = 0.33,
+          validation_split = 0.4,
           #validation_data=(X_test, test_y),
           shuffle=True)
 
@@ -144,17 +144,9 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.savefig('accuracyConv2Fer.png')
 
-#validation loss and accuracy
-search_start = time.time()
-loss, accuracy = model.evaluate(X_test, test_y)
-search_end = time.time()
-elapsed_time = search_end - search_start
-print("Elapsed time (s): "+str(elapsed_time))
-print("Validation loss: " + str(loss) + "\nValidation accuracy: " + str(accuracy))
-
 #test loss and accuracy
 search_start = time.time()
-loss, accuracy = model.evaluate(X_priv, priv_y)
+loss, accuracy = model.evaluate(X_test, test_y)
 search_end = time.time()
 elapsed_time = search_end - search_start
 print("Elapsed time (s): "+str(elapsed_time))
@@ -162,8 +154,8 @@ print("Test loss: " + str(loss) + "\nTest accuracy: " + str(accuracy))
 
 #Saving the  model to  use it later on
 mod_json = model.to_json()
-with open("vidModelConv2Fer.json", "w") as json_file:
+with open("../../models/vidModelConv2Fer.json", "w") as json_file:
     json_file.write(mod_json)
-model.save_weights("vidModelWeightsConv2Fer.h5")
+model.save_weights("../../models/vidModelWeightsConv2Fer.h5")
 
 
