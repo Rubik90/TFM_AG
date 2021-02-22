@@ -49,15 +49,15 @@ class audioPredictions:
         return label
 
 if __name__ == '__main__':
-    video = "./9930.mp4"
+    video = "./media/9930.mp4"
     vid = moviepy.editor.VideoFileClip(video)
     audio = vid.audio
-    audio.write_audiofile("./" + "audio.wav")
+    audio.write_audiofile("./media/audio.wav")
     # load model
     model = model_from_json(open("./models/vidModelConv2Fer.json", "r").read())
     # load weights
     model.load_weights('./models/vidModelWeightsConv2Fer.h5')
-    face_haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    face_haar_cascade = cv2.CascadeClassifier('./models/haarcascade_frontalface_default.xml')
 
     cap = cv2.VideoCapture(video)
     chunks = os.listdir("./audioChunks/")

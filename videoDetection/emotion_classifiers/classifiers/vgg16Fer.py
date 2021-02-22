@@ -102,10 +102,10 @@ def fit(model,X_train, train_y):
               batch_size=batch_size,
               epochs=epochs,
               verbose=1,
-              #validation_split = 0.4,
+              validation_split = 0.4,
               use_multiprocessing = True,
               #validation_steps = 270,
-              validation_data=(X_test, test_y),
+              #validation_data=(X_test, test_y),
               shuffle=True,
               callbacks = [callback])
 
